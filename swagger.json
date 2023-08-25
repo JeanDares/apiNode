@@ -1,0 +1,267 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "API de manipulacao do DASH",
+      "description": "objetivos da api",
+      "termsOfService": "http://dash2.logidados.com.br/",
+      "contact": {
+        "email": "logidados@logidados.com.br"
+      },
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:3001",
+        "description": "API de teste em desenvolvimento"
+      },
+      {
+        "url": "http://dash2.logidados.com.br/",
+        "description": "API em producao "
+      }
+    ],
+    "paths": {
+      "/sistemas": {
+        "get": {
+          "summary": "Listar sistemas",
+          "description": "Rota resonsavel por listar todos os sistemas",
+          "tags": [
+            "Sistemas"
+          ],
+          "responses": {
+            "200": {
+              "description": " Dados obtidos com sucesso",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/sistemas"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Erro interno do servidor"
+            }
+          }
+        }
+      },
+      "/setMensalidade": {
+        "post": {
+          "summary": "atualizar mensalidade",
+          "description": "Atualiza o tipo da mensalidade do cliente",
+          "tags": [
+            "Sistemas"
+          ],
+          "requestBody": {
+            "description": " No corpo da requsicao do atualizar sistema deve conter id, sigla, mensalidade ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/setMensalidade"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Sucesso"
+            },
+            "500": {
+              "description": "Erro interno do servidor"
+            }
+          }
+        }
+      },
+      "/DeleteSistema": {
+        "post": {
+          "summary": "Deleta sistema",
+          "description": "Deleta o sistema",
+          "tags": [
+            "Sistemas"
+          ],
+          "requestBody": {
+            "description": " No corpo da requsicao do deletar sistema deve conter id, sigla ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/deletarSistema"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Sucesso"
+            },
+            "500": {
+              "description": "Erro interno do servidor"
+            }
+          }
+        }
+      },
+      "/setVersao": {
+        "post": {
+          "summary": "Deleta sistema",
+          "description": "Deleta o sistema",
+          "tags": [
+            "Versao"
+          ],
+          "requestBody": {
+            "description": "Atualiza a tabela de acordo com os dados obtidos no requestBody",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/sistemas"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Sucesso"
+            },
+            "500": {
+              "description": "Erro interno do servidor"
+            }
+          }
+        }
+      },
+      "/liberaVersao": {
+        "post": {
+          "summary": "Libera nova versão de Sistema",
+          "description": "Insere na tabela versao os campos id, sigla, versao e setando ftpEm com Now()<br><br> Caso informado descritivo, notificar, notificarCNPJ, insere na tablea historicoVersao estes campos juntamente com id, sigla e versao.",
+          "tags": [
+            "Versao"
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/versao"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Sucesso"
+            },
+            "500": {
+              "description": "Erro interno do servidor"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "sistemas": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "acessadoEm": {
+              "type": "string"
+            },
+            "atualizadoEm": {
+              "type": "string"
+            },
+            "nome": {
+              "type": "string"
+            },
+            "pacotes": {
+              "type": "string"
+            },
+            "sigla": {
+              "type": "string"
+            },
+            "telefone": {
+              "type": "string"
+            },
+            "versao": {
+              "type": "string"
+            },
+            "mensalidade": {
+              "type": "string"
+            },
+            "info": {
+              "type": "string"
+            },
+            "Base": {
+              "type": "string"
+            },
+            "versaoFTP": {
+              "type": "string"
+            },
+            "FTPEm": {
+              "type": "string"
+            },
+            "statusVersao": {
+              "type": "string"
+            }
+          }
+        },
+        "setMensalidade": {
+          "type": "object",
+          "required": [
+            "id",
+            "sigla",
+            "mensalidade"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "sigla": {
+              "type": "string"
+            },
+            "mensalidade": {
+              "type": "string"
+            }
+          }
+        },
+        "deletarSistema": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "sigla": {
+              "type": "string"
+            }
+          }
+        },
+        "versao": {
+          "type": "object",
+          "required": [
+            "id",
+            "sigla",
+            "versao"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "sigla": {
+              "type": "string"
+            },
+            "versao": {
+              "type": "string"
+            },
+            "notificar": {
+              "type": "number",
+              "description": "1 - Notificar; 2 - Não notificar"
+            },
+            "notificarCNPJ": {
+              "type": "string"
+            },
+            "descritivo": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
